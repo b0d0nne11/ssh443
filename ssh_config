@@ -1,0 +1,12 @@
+# Local development parameters. Run from the repo root with `ssh -F ssh_config home`.
+Host home
+    HostName localhost
+    Port 8443
+    User tunnel
+    HostKeyAlias ssh443-local
+    IdentityFile secrets/ssh/id_ed25519
+    IdentitiesOnly yes
+    ProxyCommand openssl s_client -quiet -verify_quiet -verify_return_error -CAfile secrets/certs/home.crt -verify_hostname %h -servername %h -connect %h:%p
+    ServerAliveInterval 30
+    StrictHostKeyChecking accept-new
+    UserKnownHostsFile secrets/known_hosts
